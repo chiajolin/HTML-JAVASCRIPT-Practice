@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WEB APPLICATION HOMEWORK5</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>       
+    </head>
+    <body>
+        <div class="container">
+            <div class="title">
+                <h2>This web site will find the volume for a Cylinder, Sphere or Cone</h2>
+            </div>
+
+            <div class="settings" >Select the units(English or SI)
+                <form id="units">
+                    &nbsp<input type="radio" name="units"  value="English" checked onchange="showUnits(this.value)" /> English
+                    <input type="radio" name="units"  value="SI" onchange="showUnits(this.value)" /> SI
+                </form>
+                <br>
+
+                <form> 
+                    Select the shape         
+                    <select name="shape" id="shape" onchange="showShape(this[selectedIndex].value)">
+                        <option value="Cone">Cone</option>
+                        <option value="Sphere">Sphere</option>
+                        <option value="Cylinder">Cylinder</option>
+                    </select>
+                </form>
+                <br>
+
+                <form name="input" action="#" method="get"> 
+                    Enter the radius
+                    <input type="text" id="radius" />
+                </form>
+                <br>
+
+                <form name="input" action="#" method="get"> 
+                    For the cylinder and cone,Enter the height
+                    <input type="text" id="height" />
+                </form>
+                <br>
+
+                 <button type="button" class="btn" onclick="reset()">reset the form</button>
+            </div>
+
+            <div class="results">
+                <h3>Results</h3>
+                <p>You selected to use <span id = "selectedUnits"></span> units</p>  
+                <p>You selected to find the values for a <span id = "selectedShape"></span> shape</p>             
+            </div>
+            
+            <table class="table table-bordered table-striped" id="tb">
+                <thead>
+                    <tr>
+                        <th>Shape</th>
+                        <th>Radius</th>
+                        <th>Height</th>
+                        <th>Volume</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                       <td></td>
+                       <td>(ft)</td>
+                       <td>(ft)</td>
+                       <td>(ft^3)</td>
+                    </tr>
+                    <tr>
+                        <td>null</td>
+                        <td>null</td>
+                        <td>null</td>
+                        <td>null</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+
+            <button type="button" class="btn btn-success"  onclick="comVolume()">click to calculate the results</button>  
+        </div>
+        
+
+        <script type="text/javascript">
+
+            function showUnits(val){             
+                $("#selectedUnits").html(val);
+                if(val == "English"){
+                    document.getElementById("tb").rows[1].cells[1].innerText = "(ft)";
+                    document.getElementById("tb").rows[1].cells[2].innerText = "(ft)"; 
+                    document.getElementById("tb").rows[1].cells[3].innerText = "(ft^3)";    
+                }
+                else if(val == "SI"){
+                    document.getElementById("tb").rows[1].cells[1].innerText = "(m)";
+                    document.getElementById("tb").rows[1].cells[2].innerText = "(m)"; 
+                    document.getElementById("tb").rows[1].cells[3].innerText = "(m^3)";  
+                }
+       
+            }
+
+            function showShape(val){ 
+                $("#selectedShape").html(val);    
+            }
+           
+
+            function reset(){
+                 document.getElementById("radius").value="";
+                 document.getElementById("height").value="";
+                 document.getElementById("shape").value="";
+                 document.getElementById("units").value="English";
+                 
+                 document.getElementById("tb").rows[2].cells[0].innerText = "null";                
+                 document.getElementById("tb").rows[2].cells[1].innerText = "null"
+                 document.getElementById("tb").rows[2].cells[2].innerText = "null";
+                 document.getElementById("tb").rows[2].cells[3].innerText = "null";
+            }
+            
+            function comVolume(){
+                var shape = document.getElementById("shape");          
+                var radius=document.getElementById("radius"); 
+                var height=document.getElementById("height");
+                var pi = 3.14;
+                              
+                if(shape.value == "Cone"){
+                    volume=radius.value*radius.value*pi*height.value/3; 
+                }
+
+                else if(shape.value == "Cylinder"){
+                    volume=height.value* pi * radius.value * radius.value;     
+                }
+
+                else if(shape.value == "Sphere"){ 
+                    volume=radius.value*radius.value*radius.value*pi*4/3;
+                    
+                }
+                
+                //show on the table
+                document.getElementById("tb").rows[2].cells[0].innerText = shape.value;              
+                document.getElementById("tb").rows[2].cells[1].innerText = radius.value;
+                document.getElementById("tb").rows[2].cells[2].innerText = height.value;
+                document.getElementById("tb").rows[2].cells[3].innerText = volume;
+            }
+        </script>
+    </body>
+</html>
